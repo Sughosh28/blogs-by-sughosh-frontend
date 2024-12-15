@@ -29,7 +29,7 @@ function Profile() {
       }
       try {
         const response = await axios.get(
-          "http://localhost:8089/api/users/profile",
+          "http://blogsbysughosh.xyz:8089/api/users/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,

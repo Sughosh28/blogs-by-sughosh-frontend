@@ -77,7 +77,7 @@ function CreatePost() {
       }
 
       const response = await axios.post(
-        "http://localhost:8089/api/posts/createPost",
+        "http://blogsbysughosh.xyz:8089/api/posts/createPost",
         formData,
         {
           headers: {

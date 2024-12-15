@@ -23,7 +23,7 @@ function ViewProfile() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8089/api/posts/getUserProfile/${userId}`,
+          `http://blogsbysughosh.xyz:8089/api/posts/getUserProfile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

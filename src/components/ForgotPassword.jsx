@@ -19,7 +19,7 @@ function ForgotPassword() {
     }
     try {
       const response = await axios.post(
-        `http://localhost:8089/send-otp?email=${email}`
+        `http://blogsbysughosh.xyz:8089/send-otp?email=${email}`
       );
 
       if (response.status === 200) {

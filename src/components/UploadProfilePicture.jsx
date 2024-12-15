@@ -29,7 +29,7 @@ function UploadProfilePicture() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8089/api/users/upload-profile-picture",
+        "http://blogsbysughosh.xyz:8089/api/users/upload-profile-picture",
         formDataToSend,
         {
           headers: {
