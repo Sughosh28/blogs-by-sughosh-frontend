@@ -13,32 +13,48 @@ import UploadProfilePicture from './components/UploadProfilePicture';
 import CreatePost from "./components/CreatePost";
 import Search from "./components/Search";
 import Settings from "./components/Settings";
+import PropTypes from 'prop-types';
+import {useEffect} from 'react';
 
 
 function App() {
-
   return (
-    <div >
+    <div>
       <Router>
         <Header />
         <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/validate' element={<ValidateOTP />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/edit-profile' element={<UpdateProfile />} />
-          <Route path='/upload-profile-picture' element={<UploadProfilePicture />} />
-          <Route path='/feed' element={<Feed />} />
-          <Route path='/add-post' element={<CreatePost />} />
-          <Route path='/search' element={<Search />} />
-          <Route path="/profile/:userId" element={<ViewProfile />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/login" element={<PageWrapper component={Login} title="Login" />} />
+          <Route path="/home" element={<PageWrapper component={Home} title="Home" />} />
+          <Route path="/forgot-password" element={<PageWrapper component={ForgotPassword} title="Forgot Password" />} />
+          <Route path="/register" element={<PageWrapper component={Register} title="Register" />} />
+          <Route path="/validate" element={<PageWrapper component={ValidateOTP} title="Validate OTP" />} />
+          <Route path="/profile" element={<PageWrapper component={Profile} title="Profile" />} />
+          <Route path="/edit-profile" element={<PageWrapper component={UpdateProfile} title="Edit Profile" />} />
+          <Route path="/upload-profile-picture" element={<PageWrapper component={UploadProfilePicture} title="Upload Profile Picture" />} />
+          <Route path="/feed" element={<PageWrapper component={Feed} title="Feed" />} />
+          <Route path="/add-post" element={<PageWrapper component={CreatePost} title="Create Post" />} />
+          <Route path="/search" element={<PageWrapper component={Search} title="Search" />} />
+          <Route path="/profile/:userId" element={<PageWrapper component={ViewProfile} title="View Profile" />} />
+          <Route path="/settings" element={<PageWrapper component={Settings} title="Settings" />} />
         </Routes>
       </Router>
     </div>
   );
 }
 
+
+const PageWrapper = ({ component: Component, title }) => {
+  useEffect(() => {
+    document.title = title ? `${title} - BlogsBySughosh` : "BlogsBySughosh";
+  }, [title]);
+
+  return <Component />;
+}
+PageWrapper.propTypes = {
+  component: PropTypes.elementType.isRequired,
+  title: PropTypes.string
+};
+
+
 export default App;
+
