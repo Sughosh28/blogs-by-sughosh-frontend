@@ -37,7 +37,7 @@ function UpdateProfile() {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://blogsbysughosh.xyz:8089/api/users/profile",
+          "http://localhost:8089/api/users/profile",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ function UpdateProfile() {
 
     try {
       const response = await axios.put(
-        "http://blogsbysughosh.xyz:8089/api/users/profile",
+        "http://localhost:8089/api/users/profile",
         {
           fullName: formData.fullName,
           username: formData.username,
