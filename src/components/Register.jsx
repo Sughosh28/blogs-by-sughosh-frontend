@@ -59,7 +59,7 @@ const Register = () => {
     dispatch(registerRequest());
     try {
       const response = await axios.post(
-        "http://blogsbysughosh.xyz:8089/register",
+        "http://localhost:8089/register",
         formData,
         {
           headers: {

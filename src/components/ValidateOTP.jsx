@@ -43,7 +43,7 @@ function ValidateOTP() {
 
     try {
       const response = await axios.put(
-        "http://blogsbysughosh.xyz:8089/api/users/reset-password",
+        "http://localhost:8089/api/users/reset-password",
         { otp, newPassword },
         {
           headers: { Authorization: `Bearer ${token}` },

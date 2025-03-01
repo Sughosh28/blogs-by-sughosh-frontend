@@ -12,7 +12,7 @@ function Comments({ postId, theme,  }) {
 
     try {
       const response = await axios.post(
-        `http://blogsbysughosh.xyz:8089/api/comments/${postId}`,
+        `http://localhost:8089/api/comments/${postId}`,
         {content: newComment},
         {
           headers: {

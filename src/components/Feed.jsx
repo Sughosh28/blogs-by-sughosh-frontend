@@ -25,7 +25,7 @@ function Feed() {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://blogsbysughosh.xyz:8089/api/posts/feedPosts",
+          "http://localhost:8089/api/posts/feedPosts",
           {
             headers: {
               Authorization: `Bearer ${token}`,
