@@ -21,7 +21,7 @@ function CommentSections({ postId }) {
     const fetchComments = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8089/api/comments/post/${postId}`,
+          `https://api.blogsbysughosh.xyz/api/comments/post/${postId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
