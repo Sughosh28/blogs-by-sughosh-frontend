@@ -24,7 +24,7 @@ const navigate=useNavigate();
 
     try {
       const response = await axios.get(
-        `http://localhost:8089/api/users/search?username=${searchTerm}`,
+        `https://api.blogsbysughosh.xyz/api/users/search?username=${searchTerm}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
