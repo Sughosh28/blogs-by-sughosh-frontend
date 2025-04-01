@@ -12,7 +12,6 @@ import UpdateProfile from './components/UpdateProfile';
 import UploadProfilePicture from './components/UploadProfilePicture';
 import CreatePost from "./components/CreatePost";
 import Search from "./components/Search";
-import Settings from "./components/Settings";
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 
@@ -32,10 +31,9 @@ function App() {
           <Route path="/edit-profile" element={<PageWrapper component={UpdateProfile} title="Edit Profile" />} />
           <Route path="/upload-profile-picture" element={<PageWrapper component={UploadProfilePicture} title="Upload Profile Picture" />} />
           <Route path="/feed" element={<PageWrapper component={Feed} title="Feed" />} />
-          <Route path="/add-post" element={<PageWrapper component={CreatePost} title="Create Post" />} />
+          <Route path="/create-post" element={<PageWrapper component={CreatePost} title="Create Post" />} />
           <Route path="/search" element={<PageWrapper component={Search} title="Search" />} />
           <Route path="/profile/:userId" element={<PageWrapper component={ViewProfile} title="View Profile" />} />
-          <Route path="/settings" element={<PageWrapper component={Settings} title="Settings" />} />
         </Routes>
       </Router>
     </div>

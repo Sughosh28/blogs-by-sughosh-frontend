@@ -4,64 +4,104 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="min-h-screen mt-10 bg-gradient-to-br from-violet-500 via-purple-500 to-indigo-600 text-white flex items-center justify-center">
-      <div className="flex items-center justify-center w-screen h-screen px-4">
-        <motion.div
-          initial={{ opacity: 0, y: -60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-10 md:w-3/4 lg:w-1/2"
-        >
-          <motion.div
-            initial={{ scale: 0.7 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.7 }}
-            className="text-center mb-8"
-          >
-            <FaPenNib className="text-7xl mb-6 text-violet-600 mx-auto" />
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 tracking-tight">
-              Explore the World of Ideas
-            </h1>
-            <p className="text-gray-600 mt-4 text-base md:text-xl leading-relaxed">
-              Discover stories, insights, and the latest trends from thought leaders around the globe.
-            </p>
-          </motion.div>
+    <div className="min-h-screen relative overflow-hidden bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-800">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `radial-gradient(circle at center, rgba(255,255,255,0.07) 0.5px, transparent 1px)`,
+            backgroundSize: '24px 24px'
+          }}
+        />
+      </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center mt-8"
-          >
-            <Link
-              to="/register"
-              className="inline-block px-8 py-4 bg-violet-600 text-white font-semibold rounded-xl shadow-lg hover:bg-violet-700 transform hover:scale-105 transition-all duration-200"
+      {/* Gradient Orbs */}
+      <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />
+      <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000" />
+      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000" />
+
+      <div className="relative isolate px-6 pt-14 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56"
+        >
+          <div className="text-center">
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                duration: 1
+              }}
+              className="mb-8 relative"
             >
-              Get Started
-            </Link>
-            <p className="text-gray-700 mt-6 text-base">
-              Already have an account?{" "}
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-400 to-fuchsia-500 rounded-full blur-2xl opacity-30 animate-pulse" />
+              <FaPenNib className="text-6xl text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-500 mx-auto relative z-10" />
+            </motion.div>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-200 sm:text-6xl"
+            >
+              Share Your Story With The World
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mt-6 text-lg leading-8 text-gray-300 backdrop-blur-sm"
+            >
+              Join our community of writers, thinkers, and storytellers. Create, share, and discover amazing content.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="mt-10 flex items-center justify-center gap-x-6"
+            >
+              <Link
+                to="/register"
+                className="group relative rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 p-0.5 transition-all duration-300 ease-out hover:scale-105 hover:shadow-[0_0_2rem_-0.5rem_#8b5cf6]"
+              >
+                <span className="relative inline-flex items-center justify-center rounded-full bg-slate-900/50 backdrop-blur-sm px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 group-hover:bg-transparent">
+                  Get Started
+                  <svg
+                    className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </span>
+              </Link>
               <Link
                 to="/login"
-                className="text-violet-600 hover:text-violet-700 font-medium hover:underline transition-colors duration-200"
+                className="group text-sm font-semibold leading-6 text-gray-200"
               >
-                Log in
+                <span className="relative inline-flex items-center transition-colors duration-300 hover:text-violet-400">
+                  Log in
+                  <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
               </Link>
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="mt-10 flex justify-center items-center"
-          >
-            <div className="w-56 h-56 md:w-72 md:h-72 bg-gradient-to-br from-violet-400 to-purple-500 rounded-2xl flex items-center justify-center shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <p className="text-xl font-semibold text-white text-center px-4 leading-relaxed">
-                Your Next Story Awaits
-              </p>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </div>
