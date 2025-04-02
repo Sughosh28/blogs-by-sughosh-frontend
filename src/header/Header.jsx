@@ -292,31 +292,28 @@ function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 md:hidden"
+            transition={{ duration: 0.1 }}
+            className="fixed inset-0 bg-black/30 z-50 md:hidden"
             onClick={handleToggleDashboard}
           >
             <motion.div
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              transition={{ 
+                type: "tween",
+                duration: 0.2
+              }}
               className={`fixed top-0 left-0 bottom-0 w-72 ${
                 theme === "dark" 
-                  ? "bg-gradient-to-b from-slate-900 to-slate-800" 
+                  ? "bg-slate-900" 
                   : "bg-white"
-              } shadow-2xl overflow-y-auto rounded-r-2xl`}
+              } shadow-lg overflow-y-auto`}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Decorative Elements for Mobile Menu */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 rounded-full blur-xl"></div>
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-pink-500/10 rounded-full blur-xl"></div>
-              
-              <div className="p-6 relative z-10">
+              <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
-                  <div 
-                    className="flex items-center cursor-default"
-                  >
+                  <div className="flex items-center cursor-default">
                     <div className={`mr-2 p-1.5 rounded-lg bg-gradient-to-br ${
                       theme === "dark" 
                         ? "from-purple-500 to-pink-500" 
@@ -359,7 +356,7 @@ function Header() {
                 {/* Mobile Nav Items */}
                 <nav className="space-y-2 mb-8">
                   {(loggedIn ? navItemsLoggedIn : navItems).map((item) => (
-                    <div key={item.index} className="overflow-hidden">
+                    <div key={item.index}>
                       {item.action ? (
                         <button
                           onClick={() => { 
@@ -370,7 +367,7 @@ function Header() {
                             theme === "dark"
                               ? "text-gray-200 hover:bg-gray-800/70"
                               : "text-gray-700 hover:bg-gray-100/70"
-                          } transition-all duration-200 hover:scale-[1.02]`}
+                          } transition-colors duration-200`}
                         >
                           <span className="mr-3 text-purple-500">{item.icon}</span>
                           {item.title}
@@ -390,7 +387,7 @@ function Header() {
                               : theme === "dark"
                               ? "text-gray-200 hover:bg-gray-800/70"
                               : "text-gray-700 hover:bg-gray-100/70"
-                          } transition-all duration-200 hover:scale-[1.02]`}
+                          } transition-colors duration-200`}
                         >
                           <span className={`mr-3 ${isActive(item.link) ? "text-purple-500" : ""}`}>{item.icon}</span>
                           {item.title}
@@ -400,7 +397,6 @@ function Header() {
                   ))}
                 </nav>
 
-                
                 {/* Login/Logout Button */}
                 <div className="pt-8 mt-8">
                   <button
@@ -409,13 +405,12 @@ function Header() {
                       else handleLogin();
                       handleToggleDashboard();
                     }}
-                    className={`w-full py-3 px-4 rounded-xl text-center text-base fon
-t-medium
-                      transition-all duration-300 bg-gradient-to-r 
+                    className={`w-full py-3 px-4 rounded-xl text-center text-base font-medium
+                      transition-colors duration-200 bg-gradient-to-r 
                       ${theme === "dark"
                         ? "from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
                         : "from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                      } text-white hover:shadow-lg hover:shadow-purple-500/20`}
+                      } text-white`}
                   >
                     {loggedIn ? "Logout" : "Login"}
                   </button>

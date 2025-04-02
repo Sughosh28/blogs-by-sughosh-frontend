@@ -1,37 +1,40 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { FaUser, FaEnvelope, FaLink, FaTwitter, FaInstagram, FaGithub, FaLinkedin } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaArrowLeft, FaSave, FaUser, FaEnvelope, FaLink, FaTwitter, FaInstagram, FaGithub, FaLinkedin } from "react-icons/fa";
 
 function UpdateProfile() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    bio: "",
-    twitter: "",
-    instagram: "",
-    github: "",
-    linkedin: "",
-  });
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    username: "",
+    email: "",
+    role: "",
+    bio: "",
+    github: "",
+    instagram: "",
+    linkedin: "",
+    twitter: "",
+    profilePicture: " ",
+  });
+
+  const token = localStorage.getItem("authToken");
   const theme = useSelector((state) =>
     state.auth.isDarkMode ? "dark" : "light"
   );
 
-  const token = localStorage.getItem("authToken");
-
   useEffect(() => {
-    const fetchUserDetails = async () => {
-      if (!token) {
-        navigate("/login");
-        return;
-      }
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    const fetchUserData = async () => {
       try {
         const response = await axios.get(
           "https://api.blogsbysughosh.xyz/api/users/profile",
@@ -41,57 +44,70 @@ function UpdateProfile() {
             },
           }
         );
-        setFormData({
-          fullName: response.data.fullName || "",
-          email: response.data.email || "",
-          bio: response.data.bio || "",
-          twitter: response.data.twitter || "",
-          instagram: response.data.instagram || "",
-          github: response.data.github || "",
-          linkedin: response.data.linkedin || "",
-        });
-      } catch (error) {
-        setError("Failed to fetch user details");
+        setFormData(response.data);
+      } catch (err) {
+        setError("Failed to fetch user data.");
+        console.error("Error fetching user data:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserDetails();
-  }, [navigate, token]);
+    fetchUserData();
+  }, [token, navigate]);
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSaving(true);
-    setError("");
-    setSuccess("");
+
+    if (!token) {
+      setError("Authentication required. Redirecting to login...");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+      return;
+    }
 
     try {
-      await axios.put(
+      const response = await axios.put(
         "https://api.blogsbysughosh.xyz/api/users/profile",
-        formData,
+        {
+          fullName: formData.fullName,
+          username: formData.username,
+          email: formData.email,
+          role: formData.role,
+          bio: formData.bio,
+          github: formData.github,
+          instagram: formData.instagram,
+          linkedin: formData.linkedin,
+          twitter: formData.twitter,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
-      setSuccess("Profile updated successfully!");
-      setTimeout(() => {
-        navigate("/profile");
-      }, 1500);
-    } catch (error) {
-      setError(error.response?.data?.message || "Failed to update profile");
-    } finally {
-      setSaving(false);
+      if (response.status === 200) {
+        setSuccess("Profile updated successfully!");
+        setTimeout(() => {
+          setSuccess("");
+          navigate("/profile");
+        }, 2000);
+      } else {
+        setError("Error updating profile");
+      }
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      setError("Failed to update profile. Please try again later.");
     }
   };
 
@@ -178,7 +194,7 @@ function UpdateProfile() {
                         type="text"
                         name="fullName"
                         value={formData.fullName}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         placeholder="Full Name"
                         className={`w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 text-sm sm:text-base ${
                           theme === "dark"
@@ -197,7 +213,7 @@ function UpdateProfile() {
                         type="email"
                         name="email"
                         value={formData.email}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         placeholder="Email"
                         className={`w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 text-sm sm:text-base ${
                           theme === "dark"
@@ -215,7 +231,7 @@ function UpdateProfile() {
                       <textarea
                         name="bio"
                         value={formData.bio}
-                        onChange={handleChange}
+                        onChange={handleInputChange}
                         placeholder="Bio"
                         rows="3"
                         className={`w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 text-sm sm:text-base ${
@@ -269,7 +285,7 @@ function UpdateProfile() {
                           type="url"
                           name={social.name}
                           value={formData[social.name]}
-                          onChange={handleChange}
+                          onChange={handleInputChange}
                           placeholder={`${social.label} URL`}
                           className={`w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 text-sm sm:text-base ${
                             theme === "dark"
@@ -331,29 +347,17 @@ function UpdateProfile() {
                       : "bg-gray-100 hover:bg-gray-200 text-gray-700"
                   }`}
                 >
-                  <FaArrowLeft />
                   Back
                 </button>
                 <button
                   type="submit"
-                  disabled={saving}
                   className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-medium transition-all duration-300 text-sm sm:text-base ${
                     theme === "dark"
                       ? "bg-purple-600 hover:bg-purple-700 text-white"
                       : "bg-purple-600 hover:bg-purple-700 text-white"
                   } shadow-lg shadow-purple-500/20`}
                 >
-                  {saving ? (
-                    <>
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                      Saving...
-                    </>
-                  ) : (
-                    <>
-                      <FaSave />
-                      Save Changes
-                    </>
-                  )}
+                  Save Changes
                 </button>
               </motion.div>
             </div>
@@ -364,4 +368,4 @@ function UpdateProfile() {
   );
 }
 
-export default UpdateProfile;
+export default UpdateProfile; 
